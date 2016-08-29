@@ -1,0 +1,4 @@
+[root]
+name = "changed_hello_world"
+version = "0.0.2"
+
