@@ -1,5 +1,5 @@
 [root]
-name = "changed_hello_world"
+name = "lsh_test"
 version = "0.0.2"
 dependencies = [
  "rand 0.3.14 (registry+https://github.com/rust-lang/crates.io-index)",

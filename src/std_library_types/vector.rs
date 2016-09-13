@@ -1,8 +1,8 @@
-use std::collections::HashMap;
 extern crate rand;
-use rand::Rng;
+use std::collections::HashMap;
+use self::rand::Rng;
 
-fn vector_demo() {
+pub fn vector_demo() {
     // Iterators can be collected into vectors
     let collected_iterator: Vec<i32> = (0..10).collect();
     println!("Collected (0..10) into: {:?}", collected_iterator);
@@ -33,7 +33,7 @@ fn vector_demo() {
     println!("Fourth element: {}", xs[3]);
 }
 
-fn vector_test() {
+pub fn vector_test() {
     let mut semantic_vector1: [i32; 15] = [0; 15];
     let mut semantic_vector2: [i32; 15] = [1; 15];
     let mut semantic_vector3: [i32; 15] = [2; 15];
@@ -53,7 +53,7 @@ fn vector_test() {
 
 }
 
-fn hashmap_test() {
+pub fn hashmap_test() {
     // <&str, Vec<[i32; 15]>>
     let mut storage = HashMap::new();
 
@@ -90,15 +90,15 @@ fn hashmap_test() {
 
 }
 
-fn projection() {
+pub fn projection() {
 
     let mut hash_size = 8;
     let mut input_dim = 15;
     let mut hyperplane = Vec::new();
 
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let mut random_number = rand::thread_rng().gen_range(0, 1);
 
-    println!("{:?}", secret_number);
+    println!("random number: {:?}", random_number);
 
     // if rng.gen() { // random bool
     //     println!("i32: {}, u32: {}", rng.gen::<i32>(), rng.gen::<u32>());
@@ -111,6 +111,7 @@ fn projection() {
         let mut normal_vector = Vec::new();
         j = 0;
         loop {
+            random_number = rand::thread_rng().gen_range(0, 1);
             normal_vector.push(0);
             j += 1;
             if j >= input_dim {
@@ -132,7 +133,7 @@ fn projection() {
         print!("\n");
     }
 
-    let input_vector = Vec::new();
+    let mut input_vector = Vec::new();
     i = 0;
     loop {
         input_vector.push(0);
@@ -150,7 +151,7 @@ fn projection() {
 //     p
 // }
 
-fn main() {
+pub fn main() {
     // vector_test();
     // hashmap_test();
     projection();
