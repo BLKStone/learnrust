@@ -1,4 +1,12 @@
+#[macro_use(bson, doc)]
+extern crate bson;
+extern crate mongodb;
+
+
+
 mod std_library_types;
+mod mongodb_usage;
+
 
 fn main() {
 
@@ -22,7 +30,8 @@ fn main() {
     // let answer = foo(&v1, &v2);
     // println!("{}", answer);
 
-    std_library_types::vector::main();
+    // std_library_types::vector::main();
+    mongodb_usage::mongo::main();
 
 
 }

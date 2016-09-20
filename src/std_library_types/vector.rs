@@ -2,10 +2,18 @@
 #[allow(unused_mut)]
 
 extern crate rand;
+extern crate regex;
+use std::env;
 use self::rand::distributions::normal::StandardNormal;
 use std::collections::HashMap;
 use self::rand::Rng;
+use std::str::FromStr;
 
+
+// demo
+// generate random number
+// generate Standard Normal
+//
 
 // 查看 hyperplane
 #[allow(dead_code)]
@@ -118,7 +126,7 @@ pub fn _hash(input_vector: &mut Vec<i32>, hyperplane: &Vec<Vec<f64>> ) -> String
         sum = 0.0;
     }
 
-    println!("{:?}", projections);
+    // println!("{:?}", projections);
 
     let mut hash_code:String = "".to_string();
     for p in projections.iter() {
@@ -136,8 +144,8 @@ pub fn _hash(input_vector: &mut Vec<i32>, hyperplane: &Vec<Vec<f64>> ) -> String
 #[allow(dead_code)]
 fn index(mut storage: &mut HashMap<String, Vec<Vec<i32>>>,mut input_vector: Vec<i32>, hyperplane: &Vec<Vec<f64>>) {
 
-    println!("---------------------------------------");
-    println!("Now we are indexing: {:?}", input_vector);
+    // println!("---------------------------------------");
+    // println!("Now we are indexing: {:?}", input_vector);
 
     // let mut hyperplane = fixed_hyperplane();
     let mut hash_code = _hash(&mut input_vector, &hyperplane);
@@ -149,14 +157,14 @@ fn index(mut storage: &mut HashMap<String, Vec<Vec<i32>>>,mut input_vector: Vec<
     match storage.get_mut(&mut hash_code) {
         Some(value_vectors) => {
                 value_vectors.push(input_vector);
-                println!("the storage already has the key ...");
-                println!("{:?}",value_vectors);
+                // println!("the storage already has the key ...");
+                // println!("{:?}",value_vectors);
             },
         None => {
                 vectors.push(input_vector);
                 flag = true;
-                println!("the storage allocate new vectors ...");
-                println!("{:?}", vectors);
+                // println!("the storage allocate new vectors ...");
+                // println!("{:?}", vectors);
             }
     }
 
@@ -290,25 +298,6 @@ pub fn gen_random_value() {
 
 }
 
-
-#[allow(dead_code)]
-pub fn test_hash() {
-    let mut hyperplane = vec![
-    vec![0.23020272, 0.31947747, 0.63655935, -0.91020602],
-    vec![0.00846898, 0.2040465, -0.05346568, 0.82772385],
-    vec![0.00846898, 0.2040465, -0.05346568, 0.82772385],
-    vec![0.23020272, 0.31947747, 0.63655935, -0.91020602],
-    vec![0.00846898, 0.2040465, -0.05346568, 0.82772385],
-    vec![0.23020272, 0.31947747, 0.63655935, -0.91020602],
-    ];
-
-    let mut input_vector = vec![ 7, 11, 6, 3];
-
-    let mut projections = _hash(&mut input_vector, &mut hyperplane);
-    println!("{:?}", projections);
-
-}
-
 #[allow(dead_code)]
 #[allow(unused_mut)]
 #[allow()]
@@ -361,13 +350,50 @@ pub fn projection() {
 //     p
 // }
 
-pub fn main() {
+pub fn parse(input_vector_string: &str) -> Vec<i32> {
+    let split = input_vector_string.split(",");
+    let mut input_vector: Vec<i32> = Vec::new();
+    for s in split {
+        let p :i32 =  FromStr::from_str(s.trim()).unwrap();
+        // println!("{} -> {}", s, p);
+        input_vector.push(p);
+    };
+    input_vector
+}
+
+#[allow(dead_code)]
+pub fn test_hash(mut input_vector: &mut Vec<i32>) {
+    let mut hyperplane = big_fixed_hyperplane();
+    let mut hash_code = _hash(&mut input_vector, &mut hyperplane);
+    println!("hash code: {:?}", hash_code);
+}
+
+#[allow(dead_code)]
+pub fn test_main() {
     // vector_test();
-    // hashmap_test();
+    hashmap_test();
     // projection();
     // test_hash();
     // test_index();
     // generate_hyperplane(16, 15);
-    test_index();
+    // test_index();
     // gen_random_value();
+}
+
+pub fn main() {
+
+    let args: Vec<_> = env::args().collect();
+
+    if args.len() < 2 {
+        println!("invalid argument ... ");
+        return
+    };
+
+    // let ref input_vector_string = "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15";
+    let ref input_vector_string = args[1];
+
+    let mut input_vector = parse(input_vector_string);
+    println!("The first argument is {:?}", input_vector);
+    test_hash(&mut input_vector);
+
 }
