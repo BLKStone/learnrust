@@ -8,5 +8,5 @@ authors = [ "Jack <softjack.tech@outlook.com>" ]
 [dependencies]
 rand="0.3.0"
 regex = "0.1"
-bson = "0.2.1"
-mongodb = "0.1.5"
+bson = "0.3.0"
+mongodb = "0.1.6"
